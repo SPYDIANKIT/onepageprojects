@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Order Form - Land of Boxes</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f4f4f4;
+      margin: 0;
+      padding: 0;
+    }
+
+    .order-form {
+      max-width: 600px;
+      margin: 0 auto;
+      background-color: #fff;
+      padding: 20px;
+      border-radius: 5px;
+      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
+    }
+
+    .form-section {
+      margin-bottom: 20px;
+    }
+
+    h2, h3 {
+      text-align: center;
+    }
+
+    label {
+      display: block;
+      margin-bottom: 5px;
+    }
+
+    input, select {
+      width: 100%;
+      padding: 8px;
+      border: 1px solid #ccc;
+      border-radius: 3px;
+      box-sizing: border-box;
+    }
+
+    button {
+      width: 100%;
+      padding: 10px;
+      background-color: #007bff;
+      border: none;
+      color: #fff;
+      cursor: pointer;
+      border-radius: 3px;
+    }
+  </style>
+  <script>
+    function handlePaymentTypeChange() {
+      const paymentType = document.getElementById("payment-type");
+      const cardTypeDiv = document.getElementById("card-type");
+
+      if (paymentType.value === "none") {
+        cardTypeDiv.style.display = "none";
+      } else {
+        cardTypeDiv.style.display = "block";
+      }
+    }
+
+    function calculateTotalPrice() {
+      const productPriceMap = {
+        EconoBox: 5,
+        'Standard Box': 10,
+        'Premium Box': 15,
+        'Deluxe Box': 20,
+        'Super Deluxe Box': 30,
+      };
+
+      const selectedProduct = document.getElementById("product").value;
+      const quantity = parseInt(document.getElementById("quantity").value);
+      const totalPrice = productPriceMap[selectedProduct] * quantity;
+
+      const totalElement = document.getElementById("total-price");
+      totalElement.textContent = `Total Price: R${totalPrice}`;
+    }
+  </script>
+</head>
+<body>
+  <div class="order-form">
+    <h2>Order Form - Land of Boxes</h2>
+    <form>
+      <div class="form-section">
+        <h3>Contact Details</h3>
+        <label for="name">Name:</label>
+        <input type="text" id="name" name="name" required>
+        <label for="address">Address:</label>
+        <input type="text" id="address" name="address" required>
+        <label for="mobileno">Mobile No:</label>
+        <input type="tel" id="mobileno" name="mobileno" pattern="[0-9]{3}-[0-9]{3}-[0-9]{4}"required>
+        <label for="email">Email:</label>
+        <input type="email" id="email" name="email" required>
+      </div>
+
+      <div class="form-section">
+        <h3>Product Details</h3>
+        <label for="product">Product:</label>
+        <select id="product" name="product" onchange="calculateTotalPrice()">
+          <option value="EconoBox">EconoBox - R5</option>
+          <option value="Standard Box">Standard Box - R10</option>
+          <option value="Premium Box">Premium Box - R15</option>
+          <option value="Deluxe Box">Deluxe Box - R20</option>
+          <option value="Super Deluxe Box">Super Deluxe Box - R30</option>
+        </select>
+        <label for="quantity">Quantity:</label>
+        <input type="number" id="quantity" name="quantity" required>
+        <span id="total-price">Total Price: R0</span>
+      </div>
+
+      <div class="form-section">
+        <h3>Payment Details</h3>
+        <label for="payment-type">Payment Type:</label>
+        <select id="payment-type" name="payment-type" onchange="handlePaymentTypeChange()" required>
+          <option value="none" disabled selected>Select Payment Type</option>
+          <option value="credit">Credit Card</option>
+          <option value="credit">Debit Card</option>
+        </select>
+
+        <div id="card-type" style="display: none;">
+          <label for="card-type-select">Card Type:</label>
+          <select id="card-type-select" name="card-type-select">
+            <option value="none" disabled selected>Select Card Type</option>
+            <option value="Visa">Visa</option>
+            <option value="MasterCard">MasterCard</option>
+            <option value="American Express">American Express</option>
+            <option value="Other">Other</option>
+          </select>
+        </div>
+
+        <label for="card-number">Card Number:</label>
+        <input type="text" id="card-number" name="card-number" required>
+        <label for="expiry-date">Expiry Date:</label>
+        <input type="month" id="expiry-date" name="expiry-date" required>
+        <label for="billing-address">Billing Address:</label>
+        <input type="text" id="billing-address" name="billing-address" required>
+        <label for="delivery-address">Delivery Address:</label>
+        <input type="text" id="delivery-address" name="delivery-address" required>
+      </div>
+
+      <button type="submit">Place Order</button>
+    </form>
+  </div>
+</body>
+</html>
